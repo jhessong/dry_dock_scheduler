@@ -1,0 +1,1056 @@
+#:kivy 1.10.0
+ScreenManagement:
+    WelcomeScreen:
+    WorkerQuestionCreate:
+    WorkerQuestionLogIn:
+    CreateAccountOwner:
+    CreateAccountWorker:
+    LogInOwner:
+    LogInWorker:
+    NewAccountLinkBoat:
+    LinkBoat:
+    LinkConfirm:
+    ResetPassword:
+    HomeScreenOwner:
+    HomeScreenWorker:
+    LoggedInChangePasswordOwner:
+    LoggedInChangePasswordWorker:
+    LogOutConfirmWorker:
+    LogOutConfirmOwner:
+    ScheduleTime:
+    ScheduleWorker:
+    MoveBoatToDock:
+
+<MyButton@Button>:
+    font_size: 20
+    size_hint: .4, .05
+
+<QueueLabel@Label>:
+    color: 0,0,0,1
+    size_hint: .25, .05
+
+<WelcomeScreen>:
+    name: 'welcome'
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'background.jpg'
+    FloatLayout:
+        Label:
+            id: title
+            text: 'Sea Scheduler'
+            color: 0,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":.384, "y":.786}
+        Label:
+            id: welcome_message_1
+            text: 'Welcome to the Sea Scheduler!'
+            color: 0,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":.384, "y":.58}
+        Label:
+            id: welcome_message_2
+            text: 'To get started, log in to begin scheduling'
+            color: 0,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":.384, "y":.552}
+        MyButton:
+            on_release: app.root.current = 'questionlogin'
+            text: 'Log in'
+            pos_hint: {"x":.306, "y":.486}
+        MyButton:
+            on_release: app.root.current = 'questioncreate'
+            text: 'Create Account'
+            pos_hint: {"x":.306, "y":.4}
+
+<WorkerQuestionCreate>:
+    name: 'questioncreate'
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'background.jpg'
+    FloatLayout:
+        Label:
+            id: confirm_title
+            text: 'Are you a dry-dock worker?'
+            color: 0,0,0,1
+            size_hint: .25,.25
+            pos_hint: {"x":.384, "y":.786}
+        MyButton:
+            id: yes_button
+            on_release: app.root.current = 'createworker'
+            text: 'Yes'
+            pos_hint: {"x":.306, "y":.57}
+        MyButton:
+            id: no_button
+            on_release: app.root.current = 'createowner'
+            text: 'No'
+            pos_hint: {"x":.306, "y":.473}
+
+<WorkerQuestionLogIn>:
+    name: 'questionlogin'
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'background.jpg'
+    FloatLayout:
+        Label:
+            id: confirm_title
+            text: 'Are you a dry-dock worker?'
+            color: 0,0,0,1
+            size_hint: .25,.25
+            pos_hint: {"x":.384, "y":.786}
+        MyButton:
+            id: yes_button
+            on_release: app.root.current = 'loginworker'
+            text: 'Yes'
+            pos_hint: {"x":.306, "y":.57}
+        MyButton:
+            id: no_button
+            on_release: app.root.current = 'loginowner'
+            text: 'No'
+            pos_hint: {"x":.306, "y":.473}
+
+<CreateAccountOwner>:
+    name: 'createowner'
+    label_wid: fail_tag
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'background.jpg'
+    FloatLayout:
+        Label:
+            id: title
+            text: 'Create Account'
+            color: 0,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":.384, "y":.786}
+        Label:
+            id: e_mail_tag
+            text: 'E-mail'
+            color: 0,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":0, "y":.714}
+        TextInput:
+            id: e_mail_input
+            hint_text: 'Enter e-mail'
+            size_hint: .9, .05
+            pos_hint: {"x":.05, "y":.771}
+        Label:
+            id: username_tag
+            text: 'Username'
+            color: 0,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":.02, "y":.6}
+        TextInput:
+            id: username_input
+            hint_text: 'Enter username'
+            size_hint: .9, .05
+            pos_hint: {"x":.05, "y":.657}
+        Label:
+            id: password_tag
+            text: 'Password'
+            color: 0,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":.02, "y":.486}
+        TextInput:
+            id: password_input
+            password: True
+            hint_text: 'Enter password'
+            size_hint: .9, .05
+            pos_hint: {"x":.05, "y":.543}
+        Label:
+            id: confirm_password_tag
+            text: 'Confirm password'
+            color: 0,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":.07, "y":.371}
+        TextInput:
+            id: confirm_password_input
+            password: True
+            hint_text: 'Enter password'
+            size_hint: .9, .05
+            pos_hint: {"x":.05, "y":.429}
+        Label:
+            id: fail_tag
+            text: ''
+            color: 1,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":.382, "y":.25}
+        MyButton:
+            id: create_button
+            on_press: root.createAccount(username_input.text, e_mail_input.text, password_input.text, confirm_password_input.text, 0)
+            on_release: app.root.current = app.createNextScreen
+            text: 'Create Account'
+            pos_hint: {"x":.306, "y":.286}
+        MyButton:
+            id: return_button
+            on_release: app.root.current = 'welcome'
+            text: 'Back'
+            pos_hint: {"x":.306, "y":.2}
+
+<CreateAccountWorker>:
+    name: 'createworker'
+    label_wid: fail_tag
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'background.jpg'
+    FloatLayout:
+        Label:
+            id: title
+            text: 'Create Account'
+            color: 0,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":.384, "y":.786}
+        Label:
+            id: e_mail_tag
+            text: 'E-mail'
+            color: 0,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":0, "y":.714}
+        TextInput:
+            id: e_mail_input
+            hint_text: 'Enter e-mail'
+            size_hint: .9, .05
+            pos_hint: {"x":.05, "y":.771}
+        Label:
+            id: username_tag
+            text: 'Username'
+            color: 0,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":.02, "y":.6}
+        TextInput:
+            id: username_input
+            hint_text: 'Enter username'
+            size_hint: .9, .05
+            pos_hint: {"x":.05, "y":.657}
+        Label:
+            id: password_tag
+            text: 'Password'
+            color: 0,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":.02, "y":.486}
+        TextInput:
+            id: password_input
+            password: True
+            hint_text: 'Enter password'
+            size_hint: .9, .05
+            pos_hint: {"x":.05, "y":.543}
+        Label:
+            id: confirm_password_tag
+            text: 'Confirm password'
+            color: 0,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":.07, "y":.371}
+        TextInput:
+            id: confirm_password_input
+            password: True
+            hint_text: 'Enter password'
+            size_hint: .9, .05
+            pos_hint: {"x":.05, "y":.429}
+        Label:
+            id: fail_tag
+            text: ''
+            color: 1,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":.382, "y":.25}
+        MyButton:
+            id: create_button
+            on_press: root.createAccount(username_input.text, e_mail_input.text, password_input.text, confirm_password_input.text, 1)
+            on_release: app.root.current = app.createNextScreen
+            text: 'Create Account'
+            pos_hint: {"x":.306, "y":.286}
+        MyButton:
+            id: return_button
+            on_release: app.root.current = 'welcome'
+            text: 'Back'
+            pos_hint: {"x":.306, "y":.2}
+
+<LogInOwner>:
+    name: 'loginowner'
+    label_wid: fail_tag
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'background.jpg'
+    FloatLayout:
+        Label:
+            id: login_title
+            text: 'Log In'
+            color: 0,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":.38, "y":.786}
+        Label:
+            id: username_tag
+            text: 'Username'
+            color: 0,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":0, "y":.714}
+        TextInput:
+            id: username_input
+            hint_text: 'Enter username'
+            size_hint: .9, .05
+            pos_hint: {"x":.05, "y":.771}
+        Label:
+            id: password_tag
+            text: 'Password'
+            color: 0,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":.02, "y":.6}
+        TextInput:
+            id: password_input
+            password: True
+            hint_text: 'Enter password'
+            size_hint: .9, .05
+            pos_hint: {"x":.05, "y":.657}
+        Label:
+            id: fail_tag
+            text: ''
+            color: 1,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":.376, "y":.481}
+        MyButton:
+            id: reset_button
+            on_release: app.root.current = 'reset'
+            text: 'Forgot your password?'
+            font_size: 19
+            pos_hint: {"x":.306, "y":.507}
+        MyButton:
+            id: log_in_button
+            on_press: root.tryLogin(username_input.text, password_input.text, 0)
+            on_release: app.root.current = app.loginNextScreen
+            text: 'Log In'
+            pos_hint: {"x":.306, "y":.421}
+        MyButton:
+            id: return_button
+            on_release: app.root.current = 'welcome'
+            text: 'Back'
+            pos_hint: {"x":.306, "y":.335}
+
+<LogInWorker>:
+    name: 'loginworker'
+    label_wid: fail_tag
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'background.jpg'
+    FloatLayout:
+        Label:
+            id: login_title
+            text: 'Log In'
+            color: 0,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":.384, "y":.786}
+        Label:
+            id: username_tag
+            text: 'Username'
+            color: 0,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":0, "y":.714}
+        TextInput:
+            id: username_input
+            hint_text: 'Enter username'
+            size_hint: .9, .05
+            pos_hint: {"x":.05, "y":.771}
+        Label:
+            id: password_tag
+            text: 'Password'
+            color: 0,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":.02, "y":.6}
+        TextInput:
+            id: password_input
+            password: True
+            hint_text: 'Enter password'
+            size_hint: .9, .05
+            pos_hint: {"x":.05, "y":.657}
+        Label:
+            id: fail_tag
+            text: ''
+            color: 1,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":.376, "y":.481}
+        MyButton:
+            id: reset_button
+            on_release: app.root.current = 'reset'
+            text: 'Forgot your password?'
+            font_size: 19
+            pos_hint: {"x":.306, "y":.507}
+        MyButton:
+            id: log_in_button
+            on_press: root.tryLogin(username_input.text, password_input.text, 1)
+            on_release: app.root.current = app.loginNextScreen
+            text: 'Log In'
+            pos_hint: {"x":.306, "y":.421}
+        MyButton:
+            id: return_button
+            on_release: app.root.current = 'welcome'
+            text: 'Back'
+            pos_hint: {"x":.306, "y":.335}
+
+<NewAccountLinkBoat>:
+    name: 'newlink'
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'background.jpg'
+    FloatLayout:
+        Label:
+            id: link_title
+            text: 'Link Boat'
+            color: 0,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":.384, "y":.786}
+        Label:
+            id: link_message
+            text: 'Please enter your boat information'
+            color: 0,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":.384, "y":.73}
+        Label:
+            id: make_model_tag
+            text: 'Make and model'
+            color: 0,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":.035, "y":.68}
+        TextInput:
+            id: make_model_input
+            hint_text: 'Make and Model'
+            size_hint: .9, .05
+            pos_hint: {"x":.05, "y":.737}
+        Label:
+            id: year_tag
+            text: 'Year'
+            color: 0,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":0, "y":.566}
+        TextInput:
+            id: year_input
+            hint_text: 'Year'
+            size_hint: .9, .05
+            pos_hint: {"x":.05, "y":.623}
+        MyButton:
+            id: link_button
+            on_press: app.linkBoat(make_model_input.text, year_input.text)
+            on_release: app.root.current = 'linkconfirm'
+            text: 'Link Boat to Account'
+            pos_hint: {"x":.306, "y":.523}
+        MyButton:
+            id: skip_button
+            on_release: app.root.current = 'homeowner'
+            text: 'Skip for Now'
+            pos_hint: {"x":.306, "y":.437}
+<LinkBoat>:
+    name: 'link'
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'background.jpg'
+    FloatLayout:
+        Label:
+            id: link_title
+            text: 'Link Boat'
+            color: 0,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":.384, "y":.786}
+        Label:
+            id: link_message
+            text: 'Please enter your boat information'
+            color: 0,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":.384, "y":.73}
+        Label:
+            id: make_model_tag
+            text: 'Make and model'
+            color: 0,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":.035, "y":.68}
+        TextInput:
+            id: make_model_input
+            hint_text: 'Make and Model'
+            size_hint: .9, .05
+            pos_hint: {"x":.05, "y":.737}
+        Label:
+            id: year_tag
+            text: 'Year'
+            color: 0,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":0, "y":.566}
+        TextInput:
+            id: year_input
+            hint_text: 'Year'
+            size_hint: .9, .05
+            pos_hint: {"x":.05, "y":.623}
+        MyButton:
+            id: link_button
+            on_press: app.linkBoat(make_model_input.text, year_input.text)
+            on_release: app.root.current = 'linkconfirm'
+            text: 'Link Boat to Account'
+            pos_hint: {"x":.306, "y":.523}
+        MyButton:
+            id: return_button
+            on_release: app.root.current = 'homeowner'
+            text: 'Back to Home'
+            pos_hint: {"x":.306, "y":.437}
+
+<LinkConfirm>:
+    name: 'linkconfirm'
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'background.jpg'
+    FloatLayout:
+        Label:
+            id: confirm_message1
+            text: 'Your boat has been linked!'
+            color: 0,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":.384, "y":.786}
+        MyButton:
+            id: return_button
+            on_release: app.root.current = 'homeowner'
+            text: 'Continue'
+            pos_hint: {"x":.306, "y":.437}
+
+<ResetPassword>:
+    name: 'reset'
+    label_wid: reset_fail
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'background.jpg'
+    FloatLayout:
+        Label:
+            id: reset_title
+            text: 'Reset Password'
+            color: 0,0,0,1
+            size_hint: .25,.25
+            pos_hint: {"x":.384, "y":.786}
+        Label:
+            id: username_tag
+            text: 'Username'
+            color: 0,0,0,1
+            size_hint: .25,.25
+            pos_hint: {"x":.05, "y":.714}
+        TextInput:
+            id: username_input
+            hint_text: 'Enter username'
+            size_hint: .9, .05
+            pos_hint: {"x":.05, "y":.771}
+        Label:
+            id: e_mail_tag
+            text: 'E-mail'
+            color: 0,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":.02, "y":.6}
+        TextInput:
+            id: e_mail_input
+            hint_text: 'Enter e-mail'
+            size_hint: .9, .05
+            pos_hint: {"x":.05, "y":.657}
+        MyButton:
+            id: reset_button
+            on_press: root.resetPassword(username_input.text, e_mail_input.text)
+            text: 'Reset Password'
+            pos_hint: {"x":.306, "y":.58}
+        MyButton:
+            id: return_button
+            on_release: app.root.current = 'welcome'
+            text: 'Back'
+            pos_hint: {"x":.306, "y":.494}
+        Label:
+            id: reset_fail
+            text: ''
+            color: 0,0,0,1
+            size_hint: .2,.2
+            pos_hint: {"x":.384, "y":.33}
+
+<HomeScreenOwner>:
+    name: 'homeowner'
+    label_wid: boat_status
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'background.jpg'
+    FloatLayout:
+        Label:
+            id: home_title
+            text: 'Home'
+            color: 0,0,0,1
+            size_hint: .25,.25
+            pos_hint: {"x":.384, "y":.786}
+        Label:
+            id: home_message
+            text: 'What would you like to do today?'
+            color: 0,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":.384, "y": .73}
+        Label:
+            id: boat_status
+            text: ''
+            color: 0,0,0,1
+            size_hint: .25,.25
+            pos_hint: {"x":.382, "y":.53}
+        MyButton:
+            id: schedule_button
+            on_release: app.root.current = 'scheduletime'
+            text: 'Schedule a time'
+            pos_hint: {"x":.306, "y": .55}
+        MyButton:
+            id: link_button
+            on_release: app.root.current = 'link'
+            text: 'Link a new boat'
+            pos_hint: {"x":.306, "y":.464}
+        MyButton:
+            id: status_button
+            on_press: root.getStatusBoat(app.username)
+            text: 'Check boat status'
+            pos_hint: {"x":.306, "y":.378}
+        MyButton:
+            id: password_button
+            on_release: app.root.current = 'loggedresetowner'
+            text: 'Change password'
+            pos_hint: {"x":.306, "y":.292}
+        MyButton:
+            id: log_out_button
+            on_release: app.root.current = 'confirmowner'
+            text: 'Log out'
+            pos_hint: {"x":.306, "y":.206}
+
+<HomeScreenWorker>:
+    name: 'homeworker'
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'background.jpg'
+    FloatLayout:
+        Label:
+            id: home_title
+            text: 'Home'
+            color: 0,0,0,1
+            size_hint: .25,.25
+            pos_hint: {"x":.384, "y":.786}
+        Label:
+            id: home_message
+            text: 'What would you like to do today?'
+            color: 0,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":.384, "y": .73}
+        MyButton:
+            id: schedule_button
+            on_release: app.root.current = 'scheduleworker'
+            text: 'View Schedule'
+            pos_hint: {"x":.306, "y": .55}
+        MyButton:
+            id: move_button
+            on_release: app.root.current = 'moveboat'
+            text: 'Move Boat to Dock'
+            pos_hint: {"x":.306, "y":.464}
+        MyButton:
+            id: password_button
+            on_release: app.root.current = 'loggedresetworker'
+            text: 'Change Password'
+            pos_hint: {"x":.306, "y":.378}
+        MyButton:
+            id: log_out_button
+            on_release: app.root.current = 'confirmworker'
+            text: 'Log Out'
+            pos_hint: {"x":.306, "y":.292}
+
+<LoggedInChangePasswordOwner>:
+    name: 'loggedresetowner'
+    label_wid: reset_fail
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'background.jpg'
+    FloatLayout:
+        Label:
+            id: reset_title
+            text: 'Reset Password'
+            color: 0,0,0,1
+            size_hint: .25,.25
+            pos_hint: {"x":.384, "y":.786}
+        Label:
+            id: username_tag
+            text: 'Username'
+            color: 0,0,0,1
+            size_hint: .25,.25
+            pos_hint: {"x":.05, "y":.714}
+        TextInput:
+            id: username_input
+            hint_text: 'Enter username'
+            size_hint: .9, .05
+            pos_hint: {"x":.05, "y":.771}
+        Label:
+            id: e_mail_tag
+            text: 'E-mail'
+            color: 0,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":.02, "y":.6}
+        TextInput:
+            id: e_mail_input
+            hint_text: 'Enter e-mail'
+            size_hint: .9, .05
+            pos_hint: {"x":.05, "y":.657}
+        Label:
+            id: password_tag
+            text: 'Password'
+            color: 0,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":.02, "y":.486}
+        TextInput:
+            id: password_input
+            password: True
+            hint_text: 'Enter password'
+            size_hint: .9, .05
+            pos_hint: {"x":.05, "y":.543}
+        Label:
+            id: confirm_password_tag
+            text: 'Confirm password'
+            color: 0,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":.07, "y":.371}
+        TextInput:
+            id: confirm_password_input
+            password: True
+            hint_text: 'Enter password'
+            size_hint: .9, .05
+            pos_hint: {"x":.05, "y":.429}
+        MyButton:
+            id: reset_button
+            on_press: root.resetPassword(username_input.text, e_mail_input.text, password_input.text, confirm_password_input.text)
+            text: 'Reset Password'
+            pos_hint: {"x":.306, "y":.286}
+        MyButton:
+            id: return_button
+            on_release: app.root.current = 'homeowner'
+            text: 'Back'
+            pos_hint: {"x":.306, "y":.2}
+        Label:
+            id: reset_fail
+            text: ''
+            color: 0,0,0,1
+            size_hint: .2,.2
+            pos_hint: {"x":.384, "y":0}
+
+<LoggedInChangePasswordWorker>:
+    name: 'loggedresetworker'
+    label_wid: reset_fail
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'background.jpg'
+    FloatLayout:
+        Label:
+            id: reset_title
+            text: 'Reset Password'
+            color: 0,0,0,1
+            size_hint: .25,.25
+            pos_hint: {"x":.384, "y":.786}
+        Label:
+            id: username_tag
+            text: 'Username'
+            color: 0,0,0,1
+            size_hint: .25,.25
+            pos_hint: {"x":.05, "y":.714}
+        TextInput:
+            id: username_input
+            hint_text: 'Enter username'
+            size_hint: .9, .05
+            pos_hint: {"x":.05, "y":.771}
+        Label:
+            id: e_mail_tag
+            text: 'E-mail'
+            color: 0,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":.02, "y":.6}
+        TextInput:
+            id: e_mail_input
+            hint_text: 'Enter e-mail'
+            size_hint: .9, .05
+            pos_hint: {"x":.05, "y":.657}
+        Label:
+            id: password_tag
+            text: 'Password'
+            color: 0,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":.02, "y":.486}
+        TextInput:
+            id: password_input
+            password: True
+            hint_text: 'Enter password'
+            size_hint: .9, .05
+            pos_hint: {"x":.05, "y":.543}
+        Label:
+            id: confirm_password_tag
+            text: 'Confirm password'
+            color: 0,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":.07, "y":.371}
+        TextInput:
+            id: confirm_password_input
+            password: True
+            hint_text: 'Enter password'
+            size_hint: .9, .05
+            pos_hint: {"x":.05, "y":.429}
+        MyButton:
+            id: reset_button
+            on_press: root.resetPassword(username_input.text, e_mail_input.text, password_input.text, confirm_password_input.text)
+            text: 'Reset Password'
+            pos_hint: {"x":.306, "y":.286}
+        MyButton:
+            id: return_button
+            on_release: app.root.current = 'homeworker'
+            text: 'Back'
+            pos_hint: {"x":.306, "y":.2}
+        Label:
+            id: reset_fail
+            text: ''
+            color: 0,0,0,1
+            size_hint: .2,.2
+            pos_hint: {"x":.384, "y":0}
+
+<LogOutConfirmWorker>:
+    name: 'confirmworker'
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'background.jpg'
+    FloatLayout:
+        Label:
+            id: confirm_title
+            text: 'Are you sure you want to log out?'
+            color: 0,0,0,1
+            size_hint: .25,.25
+            pos_hint: {"x":.384, "y":.786}
+        MyButton:
+            id: yes_button
+            on_release: app.root.current = 'welcome'
+            text: 'Yes'
+            pos_hint: {"x":.306, "y":.57}
+        MyButton:
+            id: no_button
+            on_release: app.root.current = 'homeworker'
+            text: 'No'
+            pos_hint: {"x":.306, "y":.473}
+
+<LogOutConfirmOwner>:
+    name: 'confirmowner'
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'background.jpg'
+    FloatLayout:
+        Label:
+            id: confirm_title
+            text: 'Are you sure you want to log out?'
+            color: 0,0,0,1
+            size_hint: .25,.25
+            pos_hint: {"x":.384, "y":.786}
+        MyButton:
+            id: yes_button
+            on_release: app.root.current = 'welcome'
+            text: 'Yes'
+            pos_hint: {"x":.306, "y":.57}
+        MyButton:
+            id: no_button
+            on_release: app.root.current = 'homeowner'
+            text: 'No'
+            pos_hint: {"x":.306, "y":.473}
+
+<ScheduleTime>:
+    name: 'scheduletime'
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'background.jpg'
+    FloatLayout:
+        Label:
+            id: title
+            text: 'Scheduler'
+            color: 0,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":.384, "y":.786}
+        Spinner:
+            id: time_spinner
+            text: 'Select time to get your boat out'
+            values: '9:00am', '9:15am', '9:30am', '9:45am', '10:00am', '10:15am', '10:30am', '10:45am', '11:00am', '11:15am', '11:30am', '11:45am', '12:00pm', '12:15pm', '12:30pm', '12:45pm', '1:00pm', '1:15pm', '1:30pm', '1:45pm', '2:00pm', '2:15pm', '2:30pm', '2:45pm', '3:00pm', '3:15pm', '3:30pm', '3:45pm', '4:00pm', '4:15pm', '4:30pm', '4:45pm', '5:00pm'
+            pos_hint: {"x": .15, "y":.6}
+            font_size: 20
+            size_hint: .7, .05
+        MyButton:
+            id: confirm_button
+            on_press: app.schedule(time_spinner.text)
+            on_release: app.root.current = 'homeowner'
+            text: 'Confirm'
+            pos_hint: {"x":.306, "y":.314}
+        MyButton:
+            id: return_button
+            on_release: app.root.current = 'homeowner'
+            text: 'Back to Home'
+            pos_hint: {"x":.306, "y":.228}
+<ScheduleWorker>:
+    name:'scheduleworker'
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'background.jpg'
+    FloatLayout:
+        Label:
+            id: title
+            text: 'Schedule'
+            color: 0,0,0,1
+            size_hint: .25, .25
+            font_size: 40
+            pos_hint: {"x":.38, "y":.786}
+        Label:
+            id: header
+            text: 'Time   Name   Boat ID'
+            color: 0,0,0,1
+            size_hint: .25, .25
+            font_size: 30
+            pos_hint: {"x":.38, "y":.7}
+        Label:
+            id: item_1
+            text: root.label_value[0]
+            color: 0,0,0,1
+            size_hint: .25, .25
+            font_size: 20
+            pos_hint: {"x":.382, "y":.65}
+        Label:
+            id: item_2
+            text: root.label_value[1]
+            color: 0,0,0,1
+            size_hint: .25, .25
+            font_size: 20
+            pos_hint: {"x":.382, "y":.6}
+        Label:
+            id: item_3
+            text: root.label_value[2]
+            color: 0,0,0,1
+            size_hint: .25, .25
+            font_size: 20
+            pos_hint: {"x":.382, "y":.55}
+        Label:
+            id: item_4
+            text: root.label_value[3]
+            color: 0,0,0,1
+            size_hint: .25, .25
+            font_size: 20
+            pos_hint: {"x":.382, "y":.5}
+        Label:
+            id: item_5
+            text: root.label_value[4]
+            color: 0,0,0,1
+            size_hint: .25, .25
+            font_size: 20
+            pos_hint: {"x":.382, "y":.45}
+        Label:
+            id: item_6
+            text: root.label_value[5]
+            color: 0,0,0,1
+            size_hint: .25, .25
+            font_size: 20
+            pos_hint: {"x":.382, "y":.4}
+        Label:
+            id: item_7
+            text: root.label_value[6]
+            color: 0,0,0,1
+            size_hint: .25, .25
+            font_size: 20
+            pos_hint: {"x":.382, "y":.35}
+        Label:
+            id: item_8
+            text: root.label_value[7]
+            color: 0,0,0,1
+            size_hint: .25, .25
+            font_size: 20
+            pos_hint: {"x":.382, "y":.3}
+        Label:
+            id: item_9
+            text: root.label_value[8]
+            color: 0,0,0,1
+            size_hint: .25, .25
+            font_size: 20
+            pos_hint: {"x":.382, "y":.25}
+        Label:
+            id: item_10
+            text: root.label_value[9]
+            color: 0,0,0,1
+            size_hint: .25, .25
+            font_size: 20
+            pos_hint: {"x":.382, "y":.25}
+        MyButton:
+            id: refresh_button
+            on_release: root.refresh()
+            text: 'Refresh'
+            pos_hint: {"x":.306, "y":.222}
+        MyButton:
+            id: pop_button
+            on_press: root.removeFromQueue()
+            on_release: root.refresh()
+            text: 'Fulfill Request'
+            pos_hint: {"x":.306, "y":.136}
+        MyButton:
+            id: return_button
+            on_release: app.root.current = 'homeworker'
+            text: 'Back to Home'
+            pos_hint: {"x":.306, "y":.05}
+
+<MoveBoatToDock>:
+    name: 'moveboat'
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'background.jpg'
+    FloatLayout:
+        Label:
+            id: move_title
+            text: 'Move Boat to Dock'
+            color: 0,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":.384, "y":.786}
+        Label:
+            id: boat_tag
+            text: 'Boat tag'
+            color: 0,0,0,1
+            size_hint: .25, .25
+            pos_hint: {"x":0, "y":.714}
+        TextInput:
+            id: boat_input
+            hint_text: 'Enter boat tag'
+            size_hint: .9, .05
+            pos_hint: {"x":.05, "y":.771}
+        MyButton:
+            id: move_button
+            on_release: app.changeLocation(boat_input.text)
+            text: 'Move Boat'
+            font_size: 19
+            pos_hint: {"x":.306, "y":.643}
+        MyButton:
+            id: return_button
+            on_release: app.root.current = 'homeworker'
+            text: 'Back to Home'
+            pos_hint: {"x":.306, "y":.557}
